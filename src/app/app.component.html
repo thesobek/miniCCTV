@@ -1,5 +1,14 @@
-<app-map>
-  <app-tile-layer
-    url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  ></app-tile-layer>
-</app-map>
+<div class="app-container">
+
+  <app-search class="app-search"></app-search>
+
+  <div class="app-workspace">
+    <app-cameras-list class="app-cameras-list"></app-cameras-list>
+
+    <app-map class="app-map">
+      <app-tile-layer
+        url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      ></app-tile-layer>
+    </app-map>
+  </div>
+</div>
