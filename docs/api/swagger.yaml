@@ -32,7 +32,7 @@ paths:
         description: "ID of camera to return"
         required: true
         type: "integer"
-        format: "int64"    
+        format: "int64"
       description: Returns camera detail
       operationId: getById
       responses:
@@ -56,7 +56,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"    
+            $ref: "#/definitions/ApiResponse"
   /search:
     x-swagger-router-controller: camera
     get:
@@ -65,7 +65,7 @@ paths:
         in: query
         description: "Search key phrase i.e: camera name, id, etc"
         required: true
-        type: "string"    
+        type: "string"
       description: Returns camera search
       operationId: search
       responses:
@@ -74,7 +74,40 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/CameraResponse"            
+              $ref: "#/definitions/CameraResponse"
+  /map:
+    x-swagger-router-controller: map
+    get:
+      parameters:
+      - name: "x1"
+        in: query
+        description: "Longitude of the top left"
+        required: true
+        type: "number"
+      - name: "y1"
+        in: query
+        description: "Latitude of the top left"
+        required: true
+        type: "number"
+      - name: "x2"
+        in: query
+        description: "Longitude of the bottom right"
+        required: true
+        type: "number"
+      - name: "y2"
+        in: query
+        description: "Latitude of the bottom right"
+        required: true
+        type: "number"
+      description: Returns map search for given area
+      operationId: mapSearch
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CameraResponse"
   /token:
     x-swagger-router-controller: video
     get:
@@ -84,10 +117,10 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/TokenResponse"              
+            $ref: "#/definitions/TokenResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-    
+
 # complex objects have schema definitions
 definitions:
   CameraResponse:
@@ -113,9 +146,9 @@ definitions:
     properties:
       code:
         type: "integer"
-        format: "int32"        
+        format: "int32"
       type:
-        type: "string"        
+        type: "string"
       message:
         type: string
   ApiResponse:
@@ -124,4 +157,4 @@ definitions:
       type:
         type: "string"
       message:
-        type: "string"        
+        type: "string"
