@@ -1,0 +1,127 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: CCTV application
+
+host: localhost:10010
+basePath: /v1
+
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /camera:
+    x-swagger-router-controller: camera
+    get:
+      description: Returns camera list
+      operationId: getAll
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CameraResponse"
+  "/camera/{id}":
+    x-swagger-router-controller: camera
+    get:
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of camera to return"
+        required: true
+        type: "integer"
+        format: "int64"    
+      description: Returns camera detail
+      operationId: getById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CameraResponse"
+  "/connect/{id}":
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of camera to connect"
+        required: true
+        type: "integer"
+        format: "int64"
+    x-swagger-router-controller: video
+    post:
+      description: Connect video to the player
+      operationId: connect
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"    
+  /search:
+    x-swagger-router-controller: camera
+    get:
+      parameters:
+      - name: "q"
+        in: query
+        description: "Search key phrase i.e: camera name, id, etc"
+        required: true
+        type: "string"    
+      description: Returns camera search
+      operationId: search
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CameraResponse"            
+  /token:
+    x-swagger-router-controller: video
+    get:
+      description: Returns AES token
+      operationId: getToken
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/TokenResponse"              
+  /swagger:
+    x-swagger-pipe: swagger_raw
+    
+# complex objects have schema definitions
+definitions:
+  CameraResponse:
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+  TokenResponse:
+    required:
+      - token
+    properties:
+      token:
+        type: string
+  ErrorResponse:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: "integer"
+        format: "int32"        
+      type:
+        type: "string"        
+      message:
+        type: string
+  ApiResponse:
+    type: object
+    properties:
+      type:
+        type: "string"
+      message:
+        type: "string"        
